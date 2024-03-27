@@ -1,11 +1,6 @@
 import azure.functions as func
 import logging
-import pyodbc
-from config import database_config
-import requests
-from bs4 import BeautifulSoup
-import json
-import datetime
+
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
