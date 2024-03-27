@@ -21,7 +21,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             name = req_body.get('name')
 
     if name == "load":
-        webscraping()
+        #webscraping()
         return func.HttpResponse(f"Successfully updated database")
     else:
         return func.HttpResponse(
