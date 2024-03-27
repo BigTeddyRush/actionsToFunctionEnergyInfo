@@ -52,11 +52,11 @@ def webscraping():
     # create dict
     power_consumption_dict = {'unix_seconds' : unix_seconds_list, 'name' : name_list, 'data' : data_list}
 
-    server = os.environ['DATABASE_SERVER']
-    database = os.environ['DATABASE_NAME']
-    username = os.environ['DATABASE_USER']
-    password = os.environ['DATABASE_PWD']
-    driver = os.environ['DATABASE_DRIVER']
+    server = os.environ['server']
+    database = os.environ['db']
+    username = os.environ['user']
+    password = os.environ['pwd']
+    driver = os.environ['driver']
 
     try:
         with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
