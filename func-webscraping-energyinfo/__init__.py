@@ -8,30 +8,26 @@ import json
 import datetime
 
 
-app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
-
-@app.route(route="webscrapingHTTP")
-def webscrapingHTTP(req: func.HttpRequest) -> func.HttpResponse:
+def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
-    action = req.params.get('action')
-    if not action:
+    name = req.params.get('name')
+    if not name:
         try:
             req_body = req.get_json()
         except ValueError:
             pass
         else:
-            action = req_body.get('action')
+            name = req_body.get('name')
 
-    if action == 'load':
-        #webscraping()
-        return func.HttpResponse(f"Success")
+    if name:
+        return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
     else:
         return func.HttpResponse(
-             "This HTTP triggered function executed successfully. Pass as action 'load' to delete the current db and fill it new",
+             "This is a so damn fu***** bad day. Pass a name in the query string or in the request body for a personalized response.",
              status_code=200
         )
-    
+
 def webscraping():
     yesterday = (datetime.datetime.now() - datetime.timedelta(days=1)).date()
     # power consumption in Germany on one specific day
@@ -55,11 +51,11 @@ def webscraping():
     # create dict
     power_consumption_dict = {'unix_seconds' : unix_seconds_list, 'name' : name_list, 'data' : data_list}
 
-    server = os.environ['DATABASE_SERVER']
-    database = os.environ['DATABASE_NAME']
-    username = os.environ['DATABASE_USER']
-    password = os.environ['DATABASE_PWD']
-    driver= os.environ['DATABASE_DRIVER']
+    server = database_config['server']
+    database = database_config['database']
+    username = database_config['username']
+    password = database_config['password']
+    driver= database_config['driver']
 
     try:
         with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
