@@ -25,7 +25,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         return func.HttpResponse(f"Hello, {name} worked fine. This HTTP triggered function executed successfully.")
     else:
         return func.HttpResponse(
-             "This is a so damn fu***** bad day. Pass a name in the query string or in the request body for a personalized response.",
+             "Bitte übergebe den Parameter 'load' als name, um die Datenbank zu befüllen ",
              status_code=200
         )
 
