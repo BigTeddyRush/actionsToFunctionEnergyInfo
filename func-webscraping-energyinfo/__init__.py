@@ -24,7 +24,7 @@ def webscrapingHTTP(req: func.HttpRequest) -> func.HttpResponse:
             action = req_body.get('action')
 
     if action == 'load':
-        webscraping()
+        #webscraping()
         return func.HttpResponse(f"Success")
     else:
         return func.HttpResponse(
