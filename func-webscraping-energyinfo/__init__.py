@@ -7,28 +7,30 @@ from bs4 import BeautifulSoup
 import json
 import datetime
 
+app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
-def main(req: func.HttpRequest) -> func.HttpResponse:
+@app.route(route="webscrapingHTTP")
+def webscrapingHTTP(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
-    name = req.params.get('name')
-    if not name:
+    action = req.params.get('action')
+    if not action:
         try:
             req_body = req.get_json()
         except ValueError:
             pass
         else:
-            name = req_body.get('name')
+            action = req_body.get('action')
 
-    if name == "load":
-        #webscraping()
-        return func.HttpResponse(f"Successfully updated database")
+    if action == 'load':
+        webscraping()
+        return func.HttpResponse(f"Success")
     else:
         return func.HttpResponse(
-             "This is a bad day. Pass a name in the query string or in the request body for a personalized response.",
+             "This HTTP triggered function executed successfully. Pass as action 'load' to delete the current db and fill it new",
              status_code=200
         )
-
+    
 def webscraping():
     yesterday = (datetime.datetime.now() - datetime.timedelta(days=1)).date()
     # power consumption in Germany on one specific day
