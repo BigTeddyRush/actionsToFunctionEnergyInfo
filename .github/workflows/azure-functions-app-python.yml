@@ -18,6 +18,13 @@
 
 name: Deploy Python project to Azure Function App
 
+env:
+  driver: ${{ secrets.DATABASE_DRIVER }}
+  user: ${{ secrets.DATABASE_USER }}
+  pwd: ${{ secrets.DATABASE_PWD }}
+  db: ${{ secrets.DATABASE_NAME }}
+  server: ${{ secrets.DATABASE_SERVER }}
+
 on:
   push:
     branches: ["main"]
