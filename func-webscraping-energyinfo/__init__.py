@@ -70,6 +70,5 @@ def webscraping():
                     # INSERT-Befehl ausführen
                     query = "INSERT INTO dbo.EnergyCharts ([unix_seconds], [name], [data]) VALUES (?, ?, ?)"
                     cursor.execute(query, (unix_seconds, name, data))
-        print("Update database succesfully")
     except pyodbc.Error as ex:
         print("Fehler beim Verbinden zur Datenbank:", ex)
