@@ -58,7 +58,7 @@ def webscraping():
     driver = '{ODBC Driver 17 for SQL Server}'
 
     try:
-        with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ {password}) as conn:
+        with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
             with conn.cursor() as cursor:
                 # delte database to fill with new data
                 cursor.execute("DELETE FROM dbo.EnergyCharts")
