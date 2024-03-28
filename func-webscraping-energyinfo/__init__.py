@@ -54,7 +54,7 @@ def webscraping():
     server = 'energycharts.database.windows.net'
     database = 'EnergyChartsDB'
     username = 'bigteddyrush'
-    password = os.environ["PWD"]
+    password = os.environ.get('passWord')
     driver = '{ODBC Driver 17 for SQL Server}'
 
     try:
