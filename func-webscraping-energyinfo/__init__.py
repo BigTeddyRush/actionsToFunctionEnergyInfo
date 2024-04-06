@@ -53,11 +53,11 @@ def webscraping():
     # create dict
     power_consumption_dict = {'unix_seconds' : unix_seconds_list, 'name' : name_list, 'data' : data_list}
 
-    server = 'energycharts.database.windows.net'
-    database = 'EnergyChartsDB'
-    username = 'bigteddyrush'
-    password = '{qepniZ-tyhxus-3pubmu}'
-    driver = '{ODBC Driver 17 for SQL Server}'
+    #server = 'energycharts.database.windows.net'
+    #database = 'EnergyChartsDB'
+    #username = 'bigteddyrush'
+    #password = '{qepniZ-tyhxus-3pubmu}'
+    #driver = '{ODBC Driver 17 for SQL Server}'
 
     connection_string = os.environ["AZURE_SQL_CONNECTIONSTRING"]
 
