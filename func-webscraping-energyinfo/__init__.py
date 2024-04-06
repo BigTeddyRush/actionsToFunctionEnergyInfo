@@ -53,12 +53,12 @@ def webscraping():
 
     server = 'energycharts.database.windows.net'
     database = 'EnergyChartsDB'
-    #username = 'bigteddyrush'
-    #password = '{qepniZ-tyhxus-3pubmu}'
+    username = 'bigteddyrush'
+    password = '{qepniZ-tyhxus-3pubmu}'
     driver = '{ODBC Driver 17 for SQL Server}'
 
     try:
-        with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE='+database+';'Authentication'=ActiveDirectoryManagedIdentity) as conn:
+        with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
             with conn.cursor() as cursor:
                 # delte database to fill with new data
                 cursor.execute("DELETE FROM dbo.EnergyCharts")
