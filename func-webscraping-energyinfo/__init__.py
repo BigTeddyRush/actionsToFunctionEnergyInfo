@@ -57,7 +57,7 @@ def webscraping():
     #database = 'EnergyChartsDB'
     #username = 'bigteddyrush'
     #password = '{qepniZ-tyhxus-3pubmu}'
-    #driver = '{ODBC Driver 17 for SQL Server}'
+    driver = '{ODBC Driver 17 for SQL Server}'
 
     connection_string = os.environ["AZURE_SQL_CONNECTIONSTRING"]
 
