@@ -5,7 +5,6 @@ import os
 import requests
 import json
 import datetime
-from azure.identity import DefaultAzureCredential
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
