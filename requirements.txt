@@ -5,6 +5,6 @@
 azure-functions
 pyodbc
 requests
-azure.identity
+azure-identity
 DefaultAzureCredential
 struct
