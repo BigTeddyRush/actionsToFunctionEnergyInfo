@@ -5,6 +5,8 @@ import os
 import requests
 import json
 import datetime
+from azure.identity import DefaultAzureCredential
+import struct
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
@@ -57,8 +59,14 @@ def webscraping():
     password = '{qepniZ-tyhxus-3pubmu}'
     driver = '{ODBC Driver 17 for SQL Server}'
 
+    connection_string = os.environ["AZURE_SQL_CONNECTIONSTRING"]
+
     try:
-        with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
+        credential = DefaultAzureCredential(exclude_interactive_browser_credential=False)
+        token_bytes = credential.get_token("https://database.windows.net/.default").token.encode("UTF-16-LE")
+        token_struct = struct.pack(f'<I{len(token_bytes)}s', len(token_bytes), token_bytes)
+        SQL_COPT_SS_ACCESS_TOKEN = 1256  # This connection option is defined by microsoft in msodbcsql.h
+        with pyodbc.connect(connection_string, attrs_before={SQL_COPT_SS_ACCESS_TOKEN: token_struct}) as conn:
             with conn.cursor() as cursor:
                 # delte database to fill with new data
                 cursor.execute("DELETE FROM dbo.EnergyCharts")
