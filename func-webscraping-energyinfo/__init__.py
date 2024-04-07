@@ -53,8 +53,6 @@ def webscraping():
 
     server = 'energycharts.database.windows.net'
     database = 'EnergyChartsDB'
-    username = 'bigteddyrush'
-    password = '{qepniZ-tyhxus-3pubmu}'
     driver = '{ODBC Driver 17 for SQL Server}'
 
     try:
