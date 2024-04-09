@@ -4,6 +4,7 @@ import pyodbc
 import requests
 import json
 import datetime
+import os
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
@@ -20,7 +21,18 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     if name == 'load':
         webscraping()
+        
+         # GitHub repository und Workflow Informationen
+        repository_owner = "BigTeddyRush"
+        repository_name = "container-actions-energy-info"
+        workflow_file_path = "docker-image.yml"  # Passe den Pfad entsprechend an
+        token = os.environ["token"]
+
+        # Trigger des Workflow-Events
+        trigger_workflow(repository_owner, repository_name, workflow_file_path, token)
+
         return func.HttpResponse(f"Hello, {name} worked fine. This HTTP triggered function executed successfully.")
+
     else:
         return func.HttpResponse(
              "Bitte übergebe den Parameter 'load' als name, um die Datenbank zu befüllen ",
@@ -69,3 +81,24 @@ def webscraping():
                     cursor.execute(query, (unix_seconds, name, data))
     except pyodbc.Error as ex:
         print("Fehler beim Verbinden zur Datenbank:", ex)
+
+def trigger_workflow(repository_owner, repository_name, workflow_file_path, token):
+    # GitHub API-Endpunkt für das Auslösen von Workflow-Events
+    url = f"https://api.github.com/repos/{repository_owner}/{repository_name}/actions/workflows/{workflow_file_path}/dispatches"
+
+    # Erstelle den Payload für das simulierten Pull Request-Event
+    payload = {
+        "ref": "main",  # Ändere "main" zu deinem Hauptbranch-Namen
+        "inputs": {}  # Optional: Füge Eingaben hinzu, die vom Workflow benötigt werden
+    }
+
+    # Führe den POST-Request aus, um das Workflow-Event auszulösen
+    response = requests.post(url, json=payload, headers={"Authorization": f"token {token}"})
+
+    # Überprüfe die Antwort des API-Aufrufs
+    if response.status_code == 204:
+        print("Workflow event successfully dispatched.")
+    else:
+        print(f"Failed to dispatch workflow event. Status code: {response.status_code}, Response: {response.text}")
+
+   
