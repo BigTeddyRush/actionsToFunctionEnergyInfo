@@ -28,13 +28,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         workflow_file_path = "docker-image.yml"  # Passe den Pfad entsprechend an
         token = os.environ["TOKEN"]
 
-        try:
-            # Trigger des Workflow-Events
-            trigger_workflow(repository_owner, repository_name, workflow_file_path, token)
-        except:
-            print(token)
-        else:
-            print("error")
+        trigger_workflow(repository_owner, repository_name, workflow_file_path, token)
 
         return func.HttpResponse(f"Hello, {name} worked fine. This HTTP triggered function executed successfully.")
 

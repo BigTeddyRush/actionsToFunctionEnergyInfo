@@ -55,8 +55,6 @@ jobs:
           popd
 
       - name: "Run Azure Functions Action"
-        env:
-          TOKEN: ${{ secrets.TOKEN }}
         uses: Azure/functions-action@v1
         id: fa
         with:
