@@ -83,6 +83,7 @@ def webscraping():
         print("Fehler beim Verbinden zur Datenbank:", ex)
 
 def trigger_workflow(repository_owner, repository_name, workflow_file_path, token):
+    print(token)
     # GitHub API-Endpunkt für das Auslösen von Workflow-Events
     url = f"https://api.github.com/repos/{repository_owner}/{repository_name}/actions/workflows/{workflow_file_path}/dispatches"
 
