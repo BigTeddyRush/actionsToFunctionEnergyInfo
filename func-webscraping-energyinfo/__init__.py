@@ -28,8 +28,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         workflow_file_path = "docker-image.yml"  # Passe den Pfad entsprechend an
         token = os.environ["TOKEN"]
 
-        # Trigger des Workflow-Events
-        trigger_workflow(repository_owner, repository_name, workflow_file_path, token)
+        try:
+            # Trigger des Workflow-Events
+            trigger_workflow(repository_owner, repository_name, workflow_file_path, token)
+        except:
+            print(token)
+        else:
+            print("error")
 
         return func.HttpResponse(f"Hello, {name} worked fine. This HTTP triggered function executed successfully.")
 
@@ -83,7 +88,6 @@ def webscraping():
         print("Fehler beim Verbinden zur Datenbank:", ex)
 
 def trigger_workflow(repository_owner, repository_name, workflow_file_path, token):
-    print(token)
     # GitHub API-Endpunkt für das Auslösen von Workflow-Events
     url = f"https://api.github.com/repos/{repository_owner}/{repository_name}/actions/workflows/{workflow_file_path}/dispatches"
 
