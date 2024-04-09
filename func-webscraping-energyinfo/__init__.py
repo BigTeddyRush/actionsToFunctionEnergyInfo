@@ -26,7 +26,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         repository_owner = "BigTeddyRush"
         repository_name = "container-actions-energy-info"
         workflow_file_path = "docker-image.yml"  # Passe den Pfad entsprechend an
-        token = os.environ["token"]
+        token = os.environ["TOKEN"]
 
         # Trigger des Workflow-Events
         trigger_workflow(repository_owner, repository_name, workflow_file_path, token)
