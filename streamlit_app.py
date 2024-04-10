@@ -9,10 +9,12 @@ power_consumption_dict = {'unix_seconds' : [], 'name' : [], 'data' : []}
 server = 'energycharts.database.windows.net'
 database = 'EnergyChartsDB'
 driver = '{ODBC Driver 17 for SQL Server}'
+username = 'bigteddyrush'
+password = 'qepniZ-tyhxus-3pubmu'
 
 # Daten aus Datenbank abrufen
 try:
-    with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE='+database+';Authentication=ActiveDirectoryMsi',) as conn:
+    with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
         with conn.cursor() as cursor:
             # Daten aus der Datenbank abrufen
             cursor.execute("SELECT unix_seconds, name, data FROM dbo.EnergyCharts")
