@@ -88,7 +88,7 @@ def trigger_workflow(repository_owner, repository_name, workflow_file_path, toke
     # Erstelle den Payload für das simulierten Pull Request-Event
     payload = {
         "ref": "main",  # Ändere "main" zu deinem Hauptbranch-Namen
-        "inputs": {}  # Optional: Füge Eingaben hinzu, die vom Workflow benötigt werden
+        "inputs": {"name":"JULIAN"}  # Optional: Füge Eingaben hinzu, die vom Workflow benötigt werden
     }
 
     # Führe den POST-Request aus, um das Workflow-Event auszulösen
