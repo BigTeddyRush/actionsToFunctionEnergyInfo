@@ -3,10 +3,6 @@ name: Build & Upload Docker Image
 on:
   pull_request:
   workflow_dispatch:
-    inputs:
-      power_consumption_dict:
-        description: "Dict containing the data"
-        required: true
   release:
     types: [published]
 
@@ -54,9 +50,7 @@ jobs:
           DOCKER_USER: ${{ vars.DOCKER_HUB_USERNAME || github.repository_owner }}
           BUILD_NR: ${{ github.run_number }}
           PLATFORM: ${{ matrix.platforms }}
-          POWER_CONSUMPTION_DICT: ${{ toJson(github.events.inputs.power_consumption_dict) }}
         run: |
-          echo "Der eingegebene Name ist: ${POWER_CONSUMPTION_DICT}"
           ARCH=$(echo "${PLATFORM}" | awk -F  "/" '{print $2$3}')
           echo ""
           echo "============================================================="
