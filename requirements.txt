@@ -5,3 +5,6 @@
 azure-functions
 pyodbc
 requests
+pandas
+streamlit
+plotly
