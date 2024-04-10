@@ -51,6 +51,7 @@ jobs:
           BUILD_NR: ${{ github.run_number }}
           PLATFORM: ${{ matrix.platforms }}
         run: |
+          echo "name: ${{ github.event.inputs.name }}"
           ARCH=$(echo "${PLATFORM}" | awk -F  "/" '{print $2$3}')
           echo ""
           echo "============================================================="
