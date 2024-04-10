@@ -24,7 +24,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         
          # GitHub repository und Workflow Informationen
         repository_owner = "BigTeddyRush"
-        repository_name = "container-actions-energy-info"
+        repository_name = "actionsToFunctionEnergyInfo"
         workflow_file_path = "docker-image.yml"  # Passe den Pfad entsprechend an
         token = os.environ["TOKEN"]
 
