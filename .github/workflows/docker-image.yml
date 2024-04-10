@@ -3,6 +3,10 @@ name: Build & Upload Docker Image
 on:
   pull_request:
   workflow_dispatch:
+    inputs:
+      name: 
+        description: "Just some Text"
+        default: "TEST"
   release:
     types: [published]
 
@@ -51,7 +55,7 @@ jobs:
           BUILD_NR: ${{ github.run_number }}
           PLATFORM: ${{ matrix.platforms }}
         run: |
-          echo "name: ${{ github.event.inputs.name }}"
+          echo "Der eingegebene Name ist: ${{ github.event.inputs.name }}"
           ARCH=$(echo "${PLATFORM}" | awk -F  "/" '{print $2$3}')
           echo ""
           echo "============================================================="
