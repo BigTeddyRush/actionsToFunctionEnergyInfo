@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y \
 # Kopiere die lokale streamlit_app.py Datei in das Arbeitsverzeichnis im Docker-Image
 COPY streamlit_app.py .
 COPY requirements.txt .
+COPY data.py .
 
 RUN pip3 install -r requirements.txt
 
