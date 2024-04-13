@@ -21,30 +21,27 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             name = req_body.get('name')
 
     if name == 'load':
-        webscraping()
+        #webscraping()
 
-        #########################
-        # GitHub repository und Workflow Informationen
-        repository_owner = "BigTeddyRush"
-        repository_name = "actionsToFunctionEnergyInfo"
-        token = os.environ["TOKEN"]  # GitHub Access Token
-        commit_message = "Updated data.py"  # Commit-Nachricht
+        # Zugangsdaten für GitHub
+        github_token = os.environ["TOKEN"]
+        repository_name = 'bigteddyrush/actionsToFunctionEnergyInfo'
+        file_path = 'data.py'
+        
+        # Das Dictionary, das du in die Datei schreiben möchtest
+        my_dict = webscraping()
+        
+        # Verbindung zum GitHub-Repository herstellen
+        g = Github(github_token)
+        repo = g.get_repo(repository_name)
+        
+        # Dateiinhalt vorbereiten
+        file_content = "my_dict = " + str(my_dict)
+        
+        # Datei aktualisieren oder erstellen
+        contents = repo.get_contents(file_path)
+        repo.update_file(file_path, "Update data.py", file_content, contents.sha)
 
-        # GitHub-Client initialisieren
-        g = Github(token)
-        repo = g.get_repo(f"{repository_owner}/{repository_name}")
-
-        # Inhalt für data.py erstellen
-        file_content = generate_data_py_content()
-
-        # Datei in das Repository hochladen
-        try:
-            contents = repo.get_contents("data.py", ref="main")
-            repo.update_file(contents.path, commit_message, file_content, contents.sha, branch="main")
-            logging.info("Daten erfolgreich in die Datei 'data.py' im GitHub-Repository gespeichert.")
-        except Exception as e:
-            logging.error(f"Fehler beim Hochladen der Datei 'data.py' in das GitHub-Repository: {e}")
-        ###############################
         
          # GitHub repository und Workflow Informationen
         repository_owner = "BigTeddyRush"
@@ -105,6 +102,8 @@ def webscraping():
     except pyodbc.Error as ex:
         print("Fehler beim Verbinden zur Datenbank:", ex)
 
+    return(power_consumption_dict)
+
 def trigger_workflow(repository_owner, repository_name, workflow_file_path, token):
     # GitHub API-Endpunkt für das Auslösen von Workflow-Events
     url = f"https://api.github.com/repos/{repository_owner}/{repository_name}/actions/workflows/{workflow_file_path}/dispatches"
@@ -124,16 +123,5 @@ def trigger_workflow(repository_owner, repository_name, workflow_file_path, toke
     else:
         print(f"Failed to dispatch workflow event. Status code: {response.status_code}, Response: {response.text}")
 
-
-def generate_data_py_content():
-    # Hier den Inhalt von data.py basierend auf power_consumption_dict erstellen oder aktualisieren
-    # Beispiel: 
-    content = """
-    power_consumption_dict = {}
-    power_consumption_dict['unix_seconds'] = {}
-    power_consumption_dict['name'] = {}
-    power_consumption_dict['data'] = {}
-    """.format(power_consumption_dict['unix_seconds'], power_consumption_dict['name'], power_consumption_dict['data'])
-    return content
 
    
