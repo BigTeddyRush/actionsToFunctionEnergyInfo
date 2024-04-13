@@ -5,6 +5,7 @@ import requests
 import json
 import datetime
 import os
+from github import Github
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
@@ -21,6 +22,29 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     if name == 'load':
         webscraping()
+
+        #########################
+        # GitHub repository und Workflow Informationen
+        repository_owner = "BigTeddyRush"
+        repository_name = "actionsToFunctionEnergyInfo"
+        token = os.environ["TOKEN"]  # GitHub Access Token
+        commit_message = "Updated data.py"  # Commit-Nachricht
+
+        # GitHub-Client initialisieren
+        g = Github(token)
+        repo = g.get_repo(f"{repository_owner}/{repository_name}")
+
+        # Inhalt für data.py erstellen
+        file_content = generate_data_py_content()
+
+        # Datei in das Repository hochladen
+        try:
+            contents = repo.get_contents("data.py", ref="main")
+            repo.update_file(contents.path, commit_message, file_content, contents.sha, branch="main")
+            logging.info("Daten erfolgreich in die Datei 'data.py' im GitHub-Repository gespeichert.")
+        except Exception as e:
+            logging.error(f"Fehler beim Hochladen der Datei 'data.py' in das GitHub-Repository: {e}")
+        ###############################
         
          # GitHub repository und Workflow Informationen
         repository_owner = "BigTeddyRush"
@@ -99,5 +123,17 @@ def trigger_workflow(repository_owner, repository_name, workflow_file_path, toke
         print("Workflow event successfully dispatched.")
     else:
         print(f"Failed to dispatch workflow event. Status code: {response.status_code}, Response: {response.text}")
+
+
+def generate_data_py_content():
+    # Hier den Inhalt von data.py basierend auf power_consumption_dict erstellen oder aktualisieren
+    # Beispiel: 
+    content = """
+    power_consumption_dict = {}
+    power_consumption_dict['unix_seconds'] = {}
+    power_consumption_dict['name'] = {}
+    power_consumption_dict['data'] = {}
+    """.format(power_consumption_dict['unix_seconds'], power_consumption_dict['name'], power_consumption_dict['data'])
+    return content
 
    
